@@ -7,10 +7,9 @@ using System.Web;
 
 namespace ReporteGastosEmpleados.Models
 {
-    public class Empleado
+    public class Usuario
     {
-        [Key]
-        public int EmpleadoInt { get; set; }
+        [Key]public int UsuarioInt { get; set; }
         [Required(ErrorMessage="Introduce Tu Nombre")]
         [StringLength(55)]
         public string Nombre { get; set; }
@@ -25,5 +24,10 @@ namespace ReporteGastosEmpleados.Models
         [Required(ErrorMessage = "Introduce Tu Cargo")]
         [StringLength(55)]
         public string Cargo { get; set; }
+
+        [ForeignKey("TipoRol")]
+        public int TipoRolRefId { get; set; }
+        public Rol Rol { get; set; }
+        public ICollection<Reporte> Reportes { get; set; }
     }
 }
