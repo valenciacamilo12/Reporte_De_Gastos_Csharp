@@ -1,6 +1,10 @@
-﻿using System;
+﻿using ReporteGastosEmpleados.Models;
+using ReporteGastosEmpleados.Services;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -8,10 +12,18 @@ namespace ReporteGastosEmpleados.Controllers
 {
     public class ReporteGastosController : Controller
     {
+        private ReporteGastosServices _repo;
+        public ReporteGastosController()
+        {
+            _repo = new ReporteGastosServices();
+
+        }
+
         // GET: ReporteGastos
         public ActionResult Index()
         {
-            return View();
+            var model = _repo.ObtenerTodos();
+            return View(model);
         }
 
         // GET: ReporteGastos/Details/5
@@ -28,40 +40,81 @@ namespace ReporteGastosEmpleados.Controllers
 
         // POST: ReporteGastos/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "GastosTransportes,GastosTransporteAereos,GastosAlimenticios,GastosHotelarios,GastosImprevistos")] Reporte reporte)
         {
             try
             {
-                // TODO: Add insert logic here
+                using (var db = new AllContext())
+                {
+                    if (ModelState.IsValid)
+                    {
+                        db.Reportes.Add(reporte);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
 
-                return RedirectToAction("Index");
+                }
+
             }
-            catch
+            catch (RetryLimitExceededException /* dex */)
             {
-                return View();
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
             }
+            return View(reporte);
         }
+
 
         // GET: ReporteGastos/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? Id)
         {
-            return View();
+            if (Id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            }
+            using (var db = new AllContext())
+            {
+                Reporte reporte = db.Reportes.Find(Id);
+                if (reporte == null)
+                {
+
+                    return HttpNotFound();
+                }
+                return View(reporte);
+            }
+
         }
 
-        // POST: ReporteGastos/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        // POST: BlogPost/Edit/5
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditReporte(int? Id)
         {
-            try
+            if (Id == null)
             {
-                // TODO: Add update logic here
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            using (var db = new AllContext())
+            {
+                var reporteUpdate = db.Reportes.Find(Id);
+                if (TryUpdateModel(reporteUpdate, "",
+                   new string[] { "GastosTransportes", "GastosTransporteAereos", "GastosAlimenticios", "GastosHotelarios", "GastosImprevistos" }))
+                {
+                    try
+                    {
+                        db.SaveChanges();
 
-                return RedirectToAction("Index");
+                        return RedirectToAction("Index");
+                    }
+                    catch (RetryLimitExceededException /* dex */)
+                    {
+                        ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                    }
+                }
+                return View(reporteUpdate);
             }
-            catch
-            {
-                return View();
-            }
+
         }
 
         // GET: ReporteGastos/Delete/5
