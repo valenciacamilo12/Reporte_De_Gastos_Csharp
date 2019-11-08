@@ -9,8 +9,8 @@ namespace ReporteGastosEmpleados.Models
     public class Rol
     {
         public int RolId { get; set; }
-        [Required(ErrorMessage = "El nombre Del No Es Valido ")]
         [StringLength(55)]
+        [Required(ErrorMessage = "El nombre Del No Es Valido ")]
         public string TipoRol { get; set; }
         public ICollection<Usuario> Usuarios { get; set; }
     }

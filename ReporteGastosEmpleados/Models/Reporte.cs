@@ -11,38 +11,33 @@ namespace ReporteGastosEmpleados.Models
     {
         [Key]
         public int ReporteId { get; set; }
+        
         [Required]
-        [Column(TypeName = "decimal(5, 2)")]
         public decimal GastosTransportes { get; set; }
         [Required]
-        [Column(TypeName = "decimal(5, 2)")]
         public decimal GastosTransporteAereos { get; set; }
         [Required]
-        [Column(TypeName = "decimal(5, 3)")]
         public decimal GastosAlimenticios { get; set; }
         [Required]
-        [Column(TypeName = "decimal(5, 2)")]
         public decimal GastosHotelarios { get; set; }
         [Required]
-        [Column(TypeName = "decimal(5, 2)")]
         public decimal GastosImprevistos { get; set; }
+        
 
         //Definicion LLaves Foraneas
-        [ForeignKey("Pais")]
-        public int PaisRefId { get; set; }
-        public Pais Pais { get; set; }
+        
+        public int PaisRefID { get; set; }
+        [ForeignKey("PaisRefID")]
+        public virtual Pais Pais { get; set; }
 
-        [ForeignKey("Moneda")]
-        public int MonedaRefId { get; set; }
-        public Moneda Moneda { get; set; }
+        public int MonedaRefID { get; set; }
+        [ForeignKey("MonedaRefID")]
+        public virtual Moneda Moneda { get; set; }
 
-        [ForeignKey("Eampleado")]
-        public int EmpleadoRefId { get; set; }
-        public Empleado Empleado { get; set; }
-
-            
-
-
-
+        public int UsuarioRefID { get; set; }
+        [ForeignKey("UsuarioRefID")]
+        public virtual Usuario Usuario { get; set; }
+        
     }
 }
+ 

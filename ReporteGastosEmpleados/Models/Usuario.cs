@@ -9,14 +9,15 @@ namespace ReporteGastosEmpleados.Models
 {
     public class Usuario
     {
-        [Key]public int UsuarioInt { get; set; }
+        [Key]
+        public int UsuarioInt { get; set; }
         [Required(ErrorMessage="Introduce Tu Nombre")]
         [StringLength(55)]
         public string Nombre { get; set; }
         [Required(ErrorMessage = "Introduce Tu Apellido")]
         [StringLength(55)]
         public string Apellido { get; set; }
-        [Column(TypeName = "INT(11)")]
+        [Range(-10000000000, 100000000000)]
         public int Telefono { get; set; }
         [Required(ErrorMessage = "Introduce Tu Area De Trabajo")]
         [StringLength(55)]
@@ -24,10 +25,11 @@ namespace ReporteGastosEmpleados.Models
         [Required(ErrorMessage = "Introduce Tu Cargo")]
         [StringLength(55)]
         public string Cargo { get; set; }
+        public int TipoRolRefID { get; set; }
+        [ForeignKey("TipoRolRefID")]
+        public virtual Rol Rol { get; set; }
 
-        [ForeignKey("TipoRol")]
-        public int TipoRolRefId { get; set; }
-        public Rol Rol { get; set; }
         public ICollection<Reporte> Reportes { get; set; }
+       
     }
 }
