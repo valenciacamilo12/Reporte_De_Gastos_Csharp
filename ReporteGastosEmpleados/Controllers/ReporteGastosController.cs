@@ -118,25 +118,39 @@ namespace ReporteGastosEmpleados.Controllers
         }
 
         // GET: ReporteGastos/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? Id)
         {
-            return View();
+            if (Id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            }
+            using (var db = new AllContext())
+            {
+                Reporte reporte = db.Reportes.Find(Id);
+                if (reporte == null)
+                {
+
+                    return HttpNotFound();
+                }
+                return View(reporte);
+            }
         }
 
         // POST: ReporteGastos/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpPost,ActionName("Delete")]
+        public ActionResult DeleteReporte(int? Id)
         {
-            try
+            using (var db = new AllContext())
             {
-                // TODO: Add delete logic here
+                var query = (from p in db.Reportes
+                             where p.ReporteId == Id
+                             select p).Single();
 
-                return RedirectToAction("Index");
+                db.Reportes.Remove(query);
+                db.SaveChanges();
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
     }
 }

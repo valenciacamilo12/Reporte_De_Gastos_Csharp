@@ -139,19 +139,35 @@
     <Compile Include="Models\Reporte.cs" />
     <Compile Include="Models\Rol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ReporteGastosServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\adminx.css" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\notification.mp3" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\iconic\open-iconic.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\adminx.js" />
+    <Content Include="Scripts\adminx.vanilla.js" />
+    <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="fonts\iconic\open-iconic.eot" />
+    <Content Include="fonts\iconic\open-iconic.otf" />
+    <Content Include="fonts\iconic\open-iconic.ttf" />
+    <Content Include="fonts\iconic\open-iconic.woff" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\components\notifications.js" />
+    <Content Include="Scripts\components\sidebar.js" />
+    <Content Include="Scripts\components\tables.js" />
+    <Content Include="Scripts\demo.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -162,6 +178,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\util\polyfills.js" />
+    <Content Include="Scripts\util\utilities.js" />
+    <Content Include="Scripts\vendor.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
